@@ -7,7 +7,7 @@ var path = require('path')
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
 const app = express()
-const apiKey = process.env.API_KEY
+const API_KEY = process.env.API_KEY
 
 //Dependies
 const bodyParser = require('body-parser')
@@ -26,7 +26,7 @@ app.use(express.static('dist'))
 //for api key
 console.log(`Your API key is ${process.env.API_KEY}`);
 
-//ref: https://knowledge.udacity.com/questions/536010
+
 app.get("/", (req, res) => res.sendFile("index.html"));
 
 app.listen(8081, function () {
@@ -40,7 +40,7 @@ app.get('/test', function (req, res) {
 //we need post request and fetch data
 app.post('/test', async (req, res) => {
     const url = req.body.formText;
-    const baseURL = 'https://api.meaningcloud.com/sentiment-2.1?key=${apiKey}&lang=en&url=${url}';
+    const baseURL = `https://api.meaningcloud.com/sentiment-2.1?key=${API_KEY}&lang=en&url=${url}`;
     const result = await fetch(baseURL, {
         method: 'POST',
         credentials: 'same-origin',
@@ -58,3 +58,4 @@ app.post('/test', async (req, res) => {
         console.log("error", error);
     }
 });
+// get idea from https://knowledge.udacity.com/questions/533709

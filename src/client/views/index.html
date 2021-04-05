@@ -26,13 +26,26 @@
 
             <section>
                 <strong>Form Results:</strong>
-                <div id="results"></div>
+                Result: <div id="results"></div>
+                polarity: <div id="polarity"></div>
+                confidence: <div id="confidence"></div>
+                score_tag:<div id="score_tag"></div>
             </section>
         </main>
 
         <footer>
             <p>This is a footer</p>
         </footer>
+
+        <script>
+         // Check that service workers are supported
+         if ('serviceWorker' in navigator) {
+             // Use the window load event to keep the page load performant
+             window.addEventListener('load', () => {
+                 navigator.serviceWorker.register('/service-worker.js');
+             });
+         }
+        </script>
 
     </body>
 </html>
