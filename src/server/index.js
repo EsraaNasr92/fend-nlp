@@ -1,35 +1,60 @@
 const dotenv = require('dotenv');
+const fetch = require('node-fetch');
+const cors = require('cors');
 dotenv.config();
 
 var path = require('path')
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
-
 const app = express()
+const apiKey = process.env.API_KEY
 
-app.use(express.static('dist'))
+//Dependies
+const bodyParser = require('body-parser')
 
+/* Middleware*/
+//Here we are configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
 console.log(__dirname)
 
-app.get('/', function (req, res) {
-    // res.sendFile('dist/index.html')
-    res.sendFile(path.resolve('src/client/views/index.html'))
-})
+// Cors for cross origin allowance
+const { url } = require('inspector');
+app.use(express.static('dist'))
 
-// designates what port the app will listen to for incoming requests
-app.listen(8080, function () {
-    console.log('Example app listening on port 8080!')
-})
+//for api key
+console.log(`Your API key is ${process.env.API_KEY}`);
 
+//ref: https://knowledge.udacity.com/questions/536010
+app.get("/", (req, res) => res.sendFile("index.html"));
+
+app.listen(8081, function () {
+    console.log('Example app listening on port 8081!')
+})
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
 })
 
-// Require the Aylien npm package
-var aylien = require("aylien_textapi");
 
-// You could call it aylienapi, or anything else
-var textapi = new aylien({
-   application_id: process.env.API_ID,
-   application_key: process.env.API_KEY
+//we need post request and fetch data
+app.post('/test', async (req, res) => {
+    const url = req.body.formText;
+    const baseURL = 'https://api.meaningcloud.com/sentiment-2.1?key=${apiKey}&lang=en&url=${url}';
+    const result = await fetch(baseURL, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'content-Type' : 'application/json',
+        },
+    })
+    console.log('result ====> ', result)
+    try {
+        const newData = await result.json();
+        console.log(result, newData);
+        return newData;
+    }
+    catch (error) {
+        console.log("error", error);
+    }
 });
