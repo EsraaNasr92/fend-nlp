@@ -46,6 +46,8 @@ app.post('/test', async (req, res) => {
         credentials: 'same-origin',
         headers: {
           'content-Type' : 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
         },
     })
     console.log('result ====> ', result)
