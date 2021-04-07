@@ -21,10 +21,10 @@ function handleSubmit(event) {
     .then(function(res) {
 
       console.log('res ======> ', res)
-      document.getElementById('results').innerHTML = res.form;
-      document.getElementById('polarity').innerHTML = res.id;
+      document.getElementById('results').innerHTML = res.results;
+      document.getElementById('polarity').innerHTML = res.irony;
       document.getElementById("score_tag").innerHTML = res.score_tag;
-      document.getElementById("confidence").innerHTML = res.type;
+      document.getElementById("confidence").innerHTML = res.confidence;
     })
 }
 
