@@ -53,8 +53,9 @@ app.post('/test', async (req, res) => {
     console.log('result ====> ', result)
     try {
         const newData = await result.json();
-        console.log(result, newData);
-        return newData;
+        res.send(newData);
+        console.log(newData);
+        //return newData;
     }
     catch (error) {
         console.log("error", error);
