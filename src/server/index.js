@@ -50,7 +50,7 @@ app.post('/test', async (req, res) => {
           'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
         },
     })
-    console.log('result ====> ', result)
+    console.log('result ====> ', res)
     try {
         const newData = await result.json();
         res.send(newData);
